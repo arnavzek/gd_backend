@@ -1,0 +1,23 @@
+{
+  "name": "gd_backend",
+  "version": "0.1.0",
+  "description": "GreyDiary Backend Server",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Saurav Anand",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.7"
+  },
+  "devDependencies": {
+    "nodemon": "*"
+  }
+}
