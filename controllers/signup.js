@@ -5,11 +5,12 @@ exports.signup = async (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
+  const username = req.body.username;
   const plainPassword = req.body.password;
   let password;
 
   // Check if exists
-  if (!firstName || !lastName || !email || !plainPassword)
+  if (!firstName || !lastName || !email || !plainPassword || !username)
     return res.status(400).send('Please provide all required fields');
 
   // Check if valid
@@ -17,6 +18,7 @@ exports.signup = async (req, res, next) => {
     typeof firstName !== 'string' ||
     typeof lastName !== 'string' ||
     typeof email !== 'string' ||
+    typeof username !== 'string' ||
     typeof plainPassword !== 'string'
   )
     return res.status(400).send('Please provide valid data');
@@ -31,6 +33,7 @@ exports.signup = async (req, res, next) => {
     firstName,
     lastName,
     email,
+    username,
     password,
   };
 

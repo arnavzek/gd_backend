@@ -29,6 +29,6 @@ app.use('*', (req, res) =>
 app.listen(
   PORT,
   console.log(
-    `The Server Has Started In '${process.env.NODE_ENV}' mode on PORT ${process.env.PORT}`,
+    `🚀🚀 The Server Has Started In '${process.env.NODE_ENV}' mode on PORT ${process.env.PORT}`,
   ),
 );

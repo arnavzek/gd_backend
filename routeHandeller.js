@@ -3,6 +3,7 @@ const router = require('express').Router();
 // Route Includes
 const users = require('./routes/users');
 const signup = require('./routes/signup');
+const login = require('./routes/login');
 
 // Home Route
 router.get('/', (req, res) => {
@@ -14,5 +15,6 @@ router.get('/', (req, res) => {
 
 router.use('/users', users);
 router.use('/signup', signup);
+router.use('/login', login);
 
 module.exports = router;

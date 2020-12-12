@@ -9,10 +9,10 @@ async function connectDB() {
     });
 
     console.log(
-      `Database Connected to host: ${connection.connection.host} and Database: ${connection.connection.name}`,
+      `🖥 Database Connected to host: ${connection.connection.host} and Database: ${connection.connection.name}`,
     );
   } catch (err) {
-    console.error(`Database Connection Error: ${err}`);
+    console.error(`⭕ Database Connection Error: ${err}`);
     process.exit(1);
   }
 }
