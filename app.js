@@ -3,6 +3,9 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 
 const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
 const routeHandeller = require('./routeHandeller');
 
 const app = express();
@@ -13,6 +16,8 @@ connectDB();
 
 // Middlewares
 app.use(express.json());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cookieParser());
 
 // PORT
 const PORT = process.env.PORT || 5001;

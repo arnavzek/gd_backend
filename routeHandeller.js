@@ -4,6 +4,7 @@ const router = require('express').Router();
 const users = require('./routes/users');
 const signup = require('./routes/signup');
 const login = require('./routes/login');
+const getCurrentUser = require('./routes/getCurrentUser');
 
 // Home Route
 router.get('/', (req, res) => {
@@ -16,5 +17,6 @@ router.get('/', (req, res) => {
 router.use('/users', users);
 router.use('/signup', signup);
 router.use('/login', login);
+router.use('/getCurrentUser', getCurrentUser);
 
 module.exports = router;
