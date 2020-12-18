@@ -1,37 +1,35 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const AppError = require('../utils/AppError');
 
-const Err = require('../utils/errorHandeller');
-const Res = require('../utils/response');
+// const AppError = require('../utils/errorHandeller');
 
 exports.login = async (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  // Check if exists
-  if (!username || !password)
-    return res.status(400).json(new Err(400, 'Please Provide All Required Fields').err);
-
-  // Check if valid
-  if (typeof username !== 'string' || typeof password !== 'string')
-    return res.status(400).json(new Err(400, 'Please Enter Valid Values').err);
-
   try {
-    const user = await User.findOne({ username });
+    const username = req.body.username;
+    const password = req.body.password;
 
-    if (!user) return res.status(400).json(new Err(400, "Username Doesn't Exists").err);
+    // Check if exists
+    if (!username || !password)
+      throw new AppError(400, 'Please Provide All Required Fields');
+
+    // Check if valid
+    if (typeof username !== 'string' || typeof password !== 'string')
+      throw new AppError(400, 'Please Enter Valid Values');
+
+    const user = await User.findByUsername(username);
+
+    if (!user) throw new AppError(404, "User Doesn't Exist");
 
     const match = await bcrypt.compare(password, user.password);
 
-    if (!match) return res.status(400).json(new Err(400, 'Wrong Password').err);
+    if (!match) throw new AppError(400, 'Wrong Password');
 
     const token = jwt.sign({ username }, process.env.JWT_SECRET);
-    res.cookie('token', token, { httpOnly: true });
-    res.cookie('currentUser', username, { httpOnly: true });
-    res.status(200).json(new Res(200, null, { token, username }).res);
+
+    res.status(200).json({ username, token });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json(new Err(500, 'Internal Server Error'));
+    next(err);
   }
 };

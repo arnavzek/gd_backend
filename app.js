@@ -7,6 +7,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const routeHandeller = require('./routeHandeller');
+const ErrorHandeller = require('./middlewares/ErrorHandeller');
+const AppError = require('./utils/AppError');
 
 const app = express();
 
@@ -23,12 +25,19 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 5001;
 
 // Route Handeller
-app.get('/', (req, res) => res.status(403).send('Please use /v1/ route for accessing the API'));
+app.get('/', (req, res) => {
+  throw new AppError(400, 'Please use /v1/ route for accessing the API');
+});
+
 app.use('/v1/', routeHandeller);
+
 // 404 Error
-app.use('*', (req, res) =>
-  res.status(404).json({ status: 'error', message: 'API Endpoint Not Found' }),
-);
+app.use('*', (req, res) => {
+  throw new AppError(404, "API Endpoint Doesn't Exists");
+});
+
+// Setup Error Handeller
+app.use(ErrorHandeller);
 
 // Start The Server
 app.listen(

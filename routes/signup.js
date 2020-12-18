@@ -1,10 +1,13 @@
 const router = require('express').Router();
 
 const { signup } = require('../controllers/signup');
+const AppError = require('../utils/AppError');
 
 router
   .route('/')
-  .get((req, res) => res.status(403).send('User Access Forbidden'))
+  .get(() => {
+    throw new AppError(403, 'Access Forbidden');
+  })
   .post(signup);
 
 module.exports = router;
